@@ -17,7 +17,7 @@
                 <div class="discover-post-wrapper">
                     <div class="discover-post" v-for="post in posts" :key="post._id">
                         <div class="discover-post-image">
-                            <img :src="root_url + '/' + post.pictureURL" alt="" >
+                            <img :src="root_url + post.pictureURL" alt="" >
                             <div class="post-overlay" @click="goToPhoto(post._id)">
                                 <div class="post-likes">
                                     <i class="fas fa-heart"></i>
@@ -58,7 +58,7 @@ export default {
         }
     },
     created(){
-        axios.post(`${process.env.VUE_APP_ROOT_API}/api/post/discover`).then(res=>{
+        axios.post(`${process.env.VUE_APP_ROOT_API}api/post/discover`).then(res=>{
             // console.log(res.data)
             this.posts=res.data.data.posts;
             this.users=res.data.data.users;

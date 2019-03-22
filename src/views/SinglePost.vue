@@ -2,7 +2,7 @@
     <div class="singlePost" v-if="isLoaded">
 
       <div class="post-image">
-          <img :src="api_url +'/'+ post.pictureURL" alt="">
+          <img :src="api_url+ post.pictureURL" alt="">
       </div>
       <div class="post-details">
         <div class="post-author">
@@ -42,7 +42,7 @@ export default {
     },
     computed:{
         fetchPost(){
-            axios.get(`${process.env.VUE_APP_ROOT_API}/api/post/${this.postId}`).then(res=>{
+            axios.get(`${process.env.VUE_APP_ROOT_API}api/post/${this.postId}`).then(res=>{
               this.post=res.data.data;
               this.isLoaded=true;
             })

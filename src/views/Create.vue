@@ -48,7 +48,7 @@ export default {
       formData.append("pictureURL", this.image);
       const post=await axios({
         method: "post",
-        url: `${process.env.VUE_APP_ROOT_API}/api/post`,
+        url: `${process.env.VUE_APP_ROOT_API}api/post`,
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } }
       });

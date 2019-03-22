@@ -19,7 +19,7 @@
                     <div class="discover-post" v-for="post in postResults.slice(0,10)" :key="post._id">
                         <p>{{post.title}}</p>
                         <div class="discover-post-image">
-                            <img :src="root_url + '/' + post.pictureURL" alt="" >
+                            <img :src="root_url + post.pictureURL" alt="" >
                             <div class="post-overlay" @click="goToPhoto(post._id)">
                                 <div class="post-likes">
                                     <i class="fas fa-heart"></i>
@@ -56,7 +56,7 @@ export default {
     },
     computed:{
         fetchSearchResults(){
-            axios.get(`${process.env.VUE_APP_ROOT_API}/api/post/search/${this.searchTerm}`)
+            axios.get(`${process.env.VUE_APP_ROOT_API}api/post/search/${this.searchTerm}`)
                     .then(res=>{
                         this.userResults=res.data.data.userResults;
                         this.postResults=res.data.data.postResults

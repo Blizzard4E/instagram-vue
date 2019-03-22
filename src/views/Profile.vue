@@ -28,7 +28,7 @@ export default {
             if(!this.user.username)
                 return alert('Please choose a username')
             else{
-                axios.post(`${process.env.VUE_APP_ROOT_API}/user/signup`,this.user)
+                axios.post(`${process.env.VUE_APP_ROOT_API}user/signup`,this.user)
                 .then(res=>{
                     console.log(res.data.data.alreadySignedUp)
                     if(!res.data.data.alreadySignedUp){

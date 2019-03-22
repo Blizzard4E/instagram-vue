@@ -9,7 +9,7 @@
           <h6>{{post.user.username}}</h6>
         </div>
         <div class="post-image">
-          <img :src="root_url + '/' + post.pictureURL" alt="" @click="viewPost(post._id)">
+          <img :src="root_url  + post.pictureURL" alt="" @click="viewPost(post._id)">
         </div>
         <div class="post-body">
             <div class="react-buttons">
@@ -76,7 +76,7 @@ export default {
  },
   methods:{
     fetchAllPosts(){
-      axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
+      axios.get(`${process.env.VUE_APP_ROOT_API}api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
         this.posts=res.data.data.docs;
         this.totalPages=res.data.data.pages
         // console.log(this.totalPages)
@@ -86,7 +86,7 @@ export default {
     loadMorePosts(){
       this.page++;
       if(this.page<=this.totalPages){
-          axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
+          axios.get(`${process.env.VUE_APP_ROOT_API}api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
             // console.log(res.data.data.docs);
             res.data.data.docs.forEach(post=>{
               this.posts.push(post);
@@ -99,7 +99,7 @@ export default {
       
     },
     goToPhoto(photoURL){
-      window.open(`${this.root_url}/${photoURL}`, "_blank");   
+      window.open(`${this.root_url}${photoURL}`, "_blank");   
     },
     goToUserProfile(username){
       this.$router.push({name:'userprofile',params:{username}});
@@ -110,14 +110,14 @@ export default {
   
     likePost(postId){
       // const userId=JSON.parse(localStorage.getItem('user')).userId;
-      axios.post(`${process.env.VUE_APP_ROOT_API}/api/post/like`,{
+      axios.post(`${process.env.VUE_APP_ROOT_API}api/post/like`,{
         userId:this.userId,
         postId
       })
     },
     commentOnPost(postIndex,postId,receiverId,pictureURL){
       // this.posts[postIndex].comments.push(this.comment);
-      axios.post(`${process.env.VUE_APP_ROOT_API}/api/comment/comment`,{
+      axios.post(`${process.env.VUE_APP_ROOT_API}api/comment/comment`,{
         userId:this.user.userId,
         comment:this.newcomment,
         commenterName:this.user.name,

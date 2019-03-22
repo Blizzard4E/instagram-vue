@@ -13,7 +13,7 @@
             <div class="stories">
                 <h5>New Stories</h5>
                 <div class="story" v-for="story in newStories.slice(0,3)" :key="story._id">
-                    <div class="story-image"><img :src="root_url + '/' + story.pictureURL" alt=""></div>
+                    <div class="story-image"><img :src="root_url + story.pictureURL" alt=""></div>
                     <div class="story-content">
                         <div class="story-writer"><h4>{{story.user.name}}</h4></div>
                         <div class="story-written-date">{{story.createdAt | formatDate}}</div>
@@ -83,12 +83,12 @@ export default {
     methods:{
     },
     created(){
-        axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=4&page=1`).then(res=>{
+        axios.get(`${process.env.VUE_APP_ROOT_API}api/post?perPage=4&page=1`).then(res=>{
             // console.log(res.data.data.docs)
             this.newStories=res.data.data.docs;
             this.isLoaded=true;
         })
-        axios.post(`${process.env.VUE_APP_ROOT_API}/api/post/discover`).then(res=>{
+        axios.post(`${process.env.VUE_APP_ROOT_API}api/post/discover`).then(res=>{
             this.users=res.data.data.users;
         })
         

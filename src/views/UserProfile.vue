@@ -23,7 +23,7 @@
                 <div class="discover-post-wrapper">
                         <div class="discover-post" v-for="post in user.pictures" :key="post._id">
                             <div class="discover-post-image">
-                                <img :src="root_url + '/' + post.pictureURL" alt="">
+                                <img :src="root_url  + post.pictureURL" alt="">
                                 <div class="post-overlay">
                                     <div class="post-likes">
                                         <i class="fas fa-heart"></i>
@@ -60,10 +60,9 @@ export default {
 
     },
     created(){
-        axios.get(`${process.env.VUE_APP_ROOT_API}/api/user/${this.$route.params.username}`)
+        axios.get(`${process.env.VUE_APP_ROOT_API}api/user/${this.$route.params.username}`)
         .then(res=>{
             this.user=res.data.data;
-            console.log(res.data.data)
             if(this.user.followers.indexOf(this.currentUser.userId)>-1){
                 this.isFollowing=true;                
             }
