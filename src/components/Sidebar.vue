@@ -16,7 +16,7 @@
                     <div class="story-image"><img :src="root_url + '/' + story.pictureURL" alt=""></div>
                     <div class="story-content">
                         <div class="story-writer"><h4>{{story.user.name}}</h4></div>
-                        <div class="story-written-date">{{story.createdAt}}</div>
+                        <div class="story-written-date">{{story.createdAt | formatDate}}</div>
                     </div>
                 </div>
             </div>
@@ -43,13 +43,19 @@ window.onscroll = function() {
 var currentScrollPos = window.pageYOffset;
 
 //   if (prevScrollpos > currentScrollPos) {
-  if (currentScrollPos<90) {
-    document.querySelector(".sidebar-content").style.marginTop = "0";
-  } else {
-    document.querySelector(".sidebar-content").style.marginTop = "-100px";
-  }
+    if(document.querySelector('.sidebar-content')){
+        if (currentScrollPos<90) {
+            document.querySelector(".sidebar-content").style.marginTop = "0";
+        } else {
+            document.querySelector(".sidebar-content").style.marginTop = "-100px";
+        }
+    }
+ 
 //   prevScrollpos = currentScrollPos;
 }
+
+const moment=require('moment');
+// console.log(moment)
 
 export default {
     data(){
@@ -62,6 +68,12 @@ export default {
             isLoggedIn:false,
         }
     },
+    filters: {
+        formatDate: function (value) {
+            if(value)
+                return moment(value.toString()).startOf('day').fromNow();
+        }
+    },
     sockets:{
         someonePosted(data){
             this.newStories.unshift(data);
@@ -71,7 +83,8 @@ export default {
     },
     created(){
         axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=4&page=1`).then(res=>{
-            this.newStories=res.data.data;
+            // console.log(res.data.data.docs)
+            this.newStories=res.data.data.docs;
             this.isLoaded=true;
         })
         axios.post(`${process.env.VUE_APP_ROOT_API}/api/post/discover`).then(res=>{

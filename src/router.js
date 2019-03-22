@@ -6,6 +6,7 @@ import CreatePost from './views/Create'
 import SinglePost from './views/SinglePost'
 import Discover from './views/Discover'
 import UserProfile from './views/UserProfile'
+import SearchPage from './views/SearchPage'
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ export default new Router({
       path: "/profile/:username",
       name: "userprofile",
       component: UserProfile
+    },
+    {
+      path: "/search/:searchTerm",
+      name: "searchpage",
+      component: SearchPage
     },
     {
       path: "/create",

@@ -4,7 +4,8 @@ import router from "./router";
 import store from "./store";
 import GAuth from 'vue-google-oauth2'
 import VueSocketIO from 'vue-socket.io'
-require('./assets/style.css')
+require('../public/style.css');
+
 
 // Vue.forceUpdate();
 

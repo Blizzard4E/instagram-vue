@@ -3,7 +3,9 @@
         <!-- <div class="container navbar"> -->
             <header><router-link to="/">Albedo</router-link></header>
             <div class="search-form">
-                <input type="text" placeholder="Search" v-model="searchText">
+                <form action="" @submit.prevent="searchDatabase()">
+                    <input type="text" placeholder="Search" v-model="searchTerm">
+                </form>
             </div>
             <div class="profile">
                 <div class="links">
@@ -44,7 +46,7 @@ export default {
     data(){
         return{
             user:{},
-            searchText:'',
+            searchTerm:'',
             isLoggedIn:false,
             notifications:[],
             root_api:process.env.VUE_APP_ROOT_API,
@@ -60,13 +62,17 @@ export default {
     computed:{
         fetchNotifications(){
             axios.get(`${process.env.VUE_APP_ROOT_API}/api/notification/${this.user.userId}`).then(res=>{
-                // console.log(res.data.data);
                 this.notifications=res.data.data;
             })
         }
        
     },
     methods:{
+        searchDatabase(){
+            this.$router.push({name:'searchpage',params:{searchTerm:this.searchTerm}});
+            this.searchTerm=''
+            
+        },
         showNotifications(){
             this.notificationVisible=!this.notificationVisible
             this.newNotification=false;
@@ -124,8 +130,10 @@ export default {
     watch:{
         isLoggedIn:function(newValue,oldValue){
             this.isLoggedIn=newValue;
-            if(this.isLoggedIn)
+            if(this.isLoggedIn){
                 this.user=JSON.parse(localStorage.getItem('user'));
+                this.fetchNotifications;
+            }
         }
     }
 }

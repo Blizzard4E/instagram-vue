@@ -33,6 +33,7 @@
             </div>
         </div>
       </div>
+      <button @click.prevent="loadMorePosts()">Load More Post</button>
     </div>
     <div class="sidebar">
       <Sidebar />
@@ -56,8 +57,9 @@ export default {
     return{
       isLoaded:false,
       newPostsAvailable:false,
-      perPage:10,
+      perPage:4,
       page:1,
+      totalPages:1,
       posts:[],
       root_url:process.env.VUE_APP_ROOT_API,
       newcomment:'',
@@ -73,9 +75,23 @@ export default {
   methods:{
     fetchAllPosts(){
       axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
-        this.posts=res.data.data;
+        this.posts=res.data.data.docs;
+        this.totalPages=res.data.data.pages
+        // console.log(this.totalPages)
         this.isLoaded=true;
       })
+    },
+    loadMorePosts(){
+      this.page++;
+      if(this.page<=this.totalPages){
+          axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
+            console.log(res.data.data.docs);
+            // res.data.data.docs.forEach(post=>{
+            //   this.posts.push(post);
+            // })
+          })       
+        } 
+      
     },
     goToPhoto(photoURL){
       window.open(`${this.root_url}/${photoURL}`, "_blank");   
@@ -103,9 +119,11 @@ export default {
         postId
       }).then(res=>{
         this.newcomment=''
+        this.fetchAllPosts();
+        this.$forceUpdate();
       })
       this.$socket.emit('notification',{postId,comment:this.newcomment,notificationType:"Comment",to:receiverId,pictureURL,userId:this.$store.state.user.userId,username:this.$store.state.user.name});      
-    },
+    }
   },
   created(){
     this.fetchAllPosts();
@@ -116,10 +134,5 @@ export default {
         });
     }
   },
-  watch: {
-    posts:{
-      handler:'fetchAllPosts'
-    }
-}
 };
 </script>
