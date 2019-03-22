@@ -131,6 +131,7 @@ export default {
     }
   },
   created(){
+    console.log(process.env.VUE_APP_ROOT_API)
     this.fetchAllPosts();
     const user=JSON.parse(localStorage.getItem('user'));
     if(user && user.userId!==''){
