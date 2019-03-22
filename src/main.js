@@ -20,7 +20,7 @@ Vue.use(new VueSocketIO({
 
 
 const gauthOption = {
-  clientId: '820849539889-d4310mvp22c7hhm3b2ovpqhv7ks7a9r9.apps.googleusercontent.com',
+  clientId: '820849539889-rapgnef57mlp2cvormn9j6pkknbo55bm.apps.googleusercontent.com',
   scope: 'profile email',
   prompt: 'select_account'
 }
