@@ -491,3 +491,12 @@ nav{
     align-items: center;
     margin-bottom: 1rem;
 }
+
+
+/* Load More Post */
+.loadMorePostBtn{
+    box-shadow: 1px 1px 1px 1px #ddd;  
+    width: fit-content;
+    padding: 8px 12px;
+    margin: 1rem auto;
+}

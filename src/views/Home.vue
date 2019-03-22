@@ -2,6 +2,7 @@
   <div class="home container">
     <div class="posts" v-if="isLoaded">
     <div class="new-post-alert" v-if="newPostsAvailable">New Posts</div>
+      
       <div class="post" v-for="(post,index) in posts" :key="post._id">
         <div class="post-author">
           <h5 @click="goToUserProfile(post.user.username)">{{post.user.name}}</h5>
@@ -33,7 +34,7 @@
             </div>
         </div>
       </div>
-      <button @click.prevent="loadMorePosts()">Load More Post</button>
+      <button v-if="morePostsAvailable" @click.prevent="loadMorePosts()" class="loadMorePostBtn">Load More Post</button>
     </div>
     <div class="sidebar">
       <Sidebar />
@@ -63,7 +64,8 @@ export default {
       posts:[],
       root_url:process.env.VUE_APP_ROOT_API,
       newcomment:'',
-      user:JSON.parse(localStorage.getItem('user'))
+      user:JSON.parse(localStorage.getItem('user')),
+      morePostsAvailable:true
     }
   },
  sockets:{
@@ -85,12 +87,15 @@ export default {
       this.page++;
       if(this.page<=this.totalPages){
           axios.get(`${process.env.VUE_APP_ROOT_API}/api/post?perPage=${this.perPage}&page=${this.page}`).then(res=>{
-            console.log(res.data.data.docs);
-            // res.data.data.docs.forEach(post=>{
-            //   this.posts.push(post);
-            // })
+            // console.log(res.data.data.docs);
+            res.data.data.docs.forEach(post=>{
+              this.posts.push(post);
+            })
           })       
-        } 
+      }
+      if(this.page==this.totalPages){
+        this.morePostsAvailable=false;
+      }
       
     },
     goToPhoto(photoURL){

@@ -55,6 +55,7 @@ var currentScrollPos = window.pageYOffset;
 }
 
 const moment=require('moment');
+const axios=require('axios');
 // console.log(moment)
 
 export default {

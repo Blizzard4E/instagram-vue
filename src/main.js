@@ -10,7 +10,7 @@ require('../public/style.css');
 // Vue.forceUpdate();
 
 Vue.use(new VueSocketIO({
-  connection: 'localhost:3000',
+  connection: 'http://localhost:3000',
   vuex: {
     store,
     actionPrefix: 'SOCKET_',

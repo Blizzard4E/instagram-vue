@@ -15,7 +15,7 @@
                 <div class="notifications">
                     <i class="fas fa-exclamation newNotificationIcon" v-if="newNotification"></i>
                     <i class="fas fa-heart" @click="showNotifications()"  v-bind:class="{ showRed: notificationVisible }"></i>
-                    <div class="notification-bar"   v-bind:class="{ showNotifications: notificationVisible }">
+                    <div class="notification-bar" v-if="notifications"   v-bind:class="{ showNotifications: notificationVisible }">
                             <div class="notification" v-for="notification in notifications.slice(0,15)" :key="notification._id">
                                 <div v-if="notification.notificationType==='Comment'"  @click="goToPost(notification.postId)">{{notification.senderName}} commented on your post. <img :src="root_api + '/' + notification.pictureURL"></div>
                                 
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-
+const axios=require('axios');
 export default {
     name:'Navbar',
     data(){
