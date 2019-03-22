@@ -51,7 +51,7 @@ export default {
     },
     methods:{
         followPerson(userId){
-            console.log(userId)
+            // console.log(userId)
         },
         goToPhoto(postId){
             this.$router.push({name:'singlePost',params:{postId}})
