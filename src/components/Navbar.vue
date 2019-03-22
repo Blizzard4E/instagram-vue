@@ -61,7 +61,7 @@ export default {
     },
     computed:{
         fetchNotifications(){
-            axios.get(`${process.env.VUE_APP_ROOT_API}/api/notification/${this.user.userId}`).then(res=>{
+            axios.get(`${process.env.VUE_APP_ROOT_API}api/notification/${this.user.userId}`).then(res=>{
                 this.notifications=res.data.data;
             })
         }
@@ -91,7 +91,7 @@ export default {
                         name:GoogleUser.w3.ig,
                         username:GoogleUser.w3.U3.split('@')[0]
                     }  
-                    axios.post(`${process.env.VUE_APP_ROOT_API}/api/user/signup`,user)
+                    axios.post(`${process.env.VUE_APP_ROOT_API}api/user/signup`,user)
                     .then(res=>{
                         user.userId=res.data.data._id;
                         localStorage.setItem('user',JSON.stringify(user));
@@ -100,9 +100,9 @@ export default {
                         this.isLoggedIn=true;
                         // this.$socket.emit('newUser',{name:user.name,userId:user.userId});    
                         this.$socket.emit('newUser',{userId:user.userId,},function(data){
-                            if(!data)
-                                console.log("Username Already Exists");
-                            console.log(data)
+                            // if(!data)
+                                // console.log("Username Already Exists");
+                            // console.log(data)
                         });
                     }).catch(err=>{console.log(err)})                
                 
